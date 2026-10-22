@@ -34,10 +34,10 @@ $$
 
 where:
 
-- \(v_0\) is the initial speed, in metres per second (m/s).
-- \(\theta\) is the launch angle measured from the horizontal.
-- \(g\) is the acceleration due to gravity, in metres per second squared (m/s²).
-- \(t\) is the elapsed time, in seconds.
+- $v_0$ is the initial speed, in metres per second (m/s).
+- $\theta$ is the launch angle measured from the horizontal.
+- $g$ is the acceleration due to gravity, in metres per second squared (m/s²).
+- $t$ is the elapsed time, in seconds.
 
 For a projectile that lands at the same height from which it was launched, the theoretical range is
 
@@ -65,11 +65,11 @@ $$
 
 where:
 
-- \(\rho\) is the density of air.
-- \(C_d\) is the drag coefficient.
-- \(A\) is the projectile's cross-sectional area.
-- \(\mathbf{v}\) is the velocity vector.
-- \(|\mathbf{v}|\) is the speed.
+- $\rho$ is the density of air.
+- $C_d$ is the drag coefficient.
+- $A$ is the projectile's cross-sectional area.
+- $\mathbf{v}$ is the velocity vector.
+- $|\mathbf{v}|$ is the speed.
 - The negative sign indicates that drag acts opposite to the direction of motion.
 
 The projectile's acceleration is calculated using Newton's second law, including both gravity and air resistance.
@@ -82,7 +82,7 @@ The simulation uses the **semi-implicit Euler method** to update the projectile'
 
 At each time step, the model calculates the acceleration, updates the velocity, and then updates the position. When the projectile reaches ground level, the simulation estimates its landing point using interpolation.
 
-The time step, \(\Delta t\), determines how frequently the simulation updates the projectile's motion.
+The time step, $\Delta t$, determines how frequently the simulation updates the projectile's motion.
 
 Smaller time steps generally improve the numerical approximation, although they require more calculations.
 
@@ -90,12 +90,12 @@ Smaller time steps generally improve the numerical approximation, although they 
 
 | Parameter | Value | Unit |
 |---|---:|---|
-| Gravitational acceleration, \(g\) | 9.81 | m/s² |
-| Air density, \(\rho\) | 1.225 | kg/m³ |
-| Projectile mass, \(m\) | 0.145 | kg |
-| Projectile radius, \(r\) | 0.037 | m |
-| Drag coefficient, \(C_d\) | 0.47 | Dimensionless |
-| Default time step, \(\Delta t\) | 0.01 | s |
+| Gravitational acceleration, ($g$) | 9.81 | m/s² |
+| Air density, ($\rho$) | 1.225 | kg/m³ |
+| Projectile mass, ($m$) | 0.145 | kg |
+| Projectile radius, ($r$) | 0.037 | m |
+| Drag coefficient, ($C_d$) | 0.47 | Dimensionless |
+| Default time step, ($\Delta t$) | 0.01 | s |
 
 The cross-sectional area is calculated using
 
