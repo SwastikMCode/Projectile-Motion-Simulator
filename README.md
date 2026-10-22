@@ -175,10 +175,6 @@ This project investigates the differences between ideal projectile motion and mo
 
 The simulation demonstrates how physical modelling and numerical methods can be combined to investigate a classical mechanics problem.
 
-**Author:** Swastik Mishra
-
 ## Author
 
 Swastik Mishra
-
-Computational physics project exploring numerical modelling, projectile motion, and scientific data visualisation.
