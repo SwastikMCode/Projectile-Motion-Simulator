@@ -157,17 +157,52 @@ The numerical output should be used to draw conclusions about the effect of drag
 
 ## 9. How to Run the Project
 
-1. Install Python and Jupyter Notebook.
-2. Install the required libraries:
+You can run this project using **Google Colab (recommended)** or locally on your computer.
+
+### Option A: Google Colab (Recommended)
+
+Google Colab lets you run Python notebooks directly in your browser without installing Python or Jupyter Notebook.
+
+1. **Open the repository:** Navigate to this GitHub repository and locate `Projectile_Motion_Simulator.ipynb`.
+2. **Open Google Colab:** Visit [Google Colab](https://colab.research.google.com/).
+3. **Load the notebook:** Select **File → Open notebook → GitHub**. Enter the repository URL, search for the notebook, and open it.
+4. **Run the simulation:** Select **Runtime → Run all** to execute all cells in order. You can also run individual cells using the play button beside each cell.
+5. **Enter the launch conditions:** When prompted, enter the initial speed in metres per second (m/s) and the launch angle in degrees.
+6. **Explore the results:** Examine the calculated range, maximum height, trajectory graphs, and numerical convergence results.
+
+To save your executed notebook and its outputs, select **File → Save a copy in Drive**. You can then save a copy to GitHub if you want to publish your results.
+
+### Option B: Run Locally Using Jupyter Notebook
+
+1. **Install Python:** Download and install Python from the [official Python website](https://www.python.org/downloads/).
+2. **Download the project:** On GitHub, select **Code → Download ZIP**, then extract the downloaded folder.
+3. **Open a terminal:** Navigate to the extracted project folder containing `Projectile_Motion_Simulator.ipynb`.
+4. **Install the required libraries:** Run the following command:
 
    ```bash
-   pip install numpy matplotlib
+   python -m pip install notebook numpy matplotlib
    ```
 
-3. Open `Projectile_Motion_Simulator.ipynb` in Jupyter Notebook.
-4. Run the cells in order.
-5. Enter the initial speed and launch angle when prompted.
-6. Examine the numerical output, trajectory plots and convergence results.
+   If your system uses `python3` instead of `python`, run:
+
+   ```bash
+   python3 -m pip install notebook numpy matplotlib
+   ```
+
+5. **Launch Jupyter Notebook:** Run the following command in the terminal:
+
+   ```bash
+   jupyter notebook
+   ```
+
+6. **Open the notebook:** In the browser tab that opens, select `Projectile_Motion_Simulator.ipynb`.
+7. **Run the simulation:** Execute the cells from top to bottom, enter the requested launch conditions, and examine the output and graphs.
+
+### Troubleshooting
+
+- **`ModuleNotFoundError`:** Install the missing library using the command in Step 4.
+- **Notebook not found:** Check that you opened the correct folder and that the filename matches.
+- **Unexpected results:** Make sure you executed the cells in order and entered valid launch conditions.
 
 ## Conclusion
 
