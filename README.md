@@ -1,154 +1,181 @@
 # Projectile Motion Simulator: Ideal Motion vs Air Resistance
 
-A Python-based computational physics project investigating projectile motion, quadratic air resistance, and numerical accuracy.
+A Python simulation exploring how air resistance affects projectile motion and how numerical simulations compare with analytical predictions.
 
 ## Research Question
 
-How does air resistance affect a projectile's trajectory, range, and maximum height, and how accurately can a numerical simulation reproduce theoretical predictions for ideal projectile motion?
+**How does quadratic air resistance change a projectile's trajectory, range and maximum height, and how accurately can numerical simulation reproduce ideal projectile motion?**
 
 ## Project Overview
 
-This project compares three models:
+This project compares three ways of modelling projectile motion:
 
-1. **Ideal analytical model:** Uses the equations of projectile motion without air resistance.
-2. **Numerical simulation without drag:** Uses the semi-implicit Euler method to approximate ideal projectile motion.
-3. **Numerical simulation with drag:** Includes quadratic air resistance and calculates the trajectory numerically.
+- **Ideal analytical model:** calculates projectile motion using standard kinematic equations, assuming no air resistance.
+- **Numerical model without air resistance:** simulates motion step by step and compares the results with the analytical solution.
+- **Numerical model with quadratic air resistance:** incorporates drag to investigate how it changes the trajectory.
 
-The project also investigates how the numerical time step affects accuracy.
+A numerical convergence test investigates how the simulation's time step affects the accuracy of its predictions.
 
-## Physics and Mathematical Model
+## 1. Ideal Projectile Motion
 
-### Ideal Projectile Motion
+The ideal model assumes that gravity is the only force acting on the projectile after launch. Air resistance is ignored.
 
-Assuming constant gravitational acceleration and no air resistance, the horizontal and vertical positions are:
+The horizontal position is
 
-\[
+$$
 x(t)=v_0\cos(\theta)t
-\]
+$$
 
-\[
-y(t)=v_0\sin(\theta)t-\frac12gt^2
-\]
+The vertical position is
 
-For equal launch and landing heights, the theoretical range and maximum height are:
-
-\[
-R=\frac{v_0^2\sin(2\theta)}{g}
-\]
-
-\[
-H=\frac{v_0^2\sin^2(\theta)}{2g}
-\]
-
-These equations provide a reference for validating the numerical simulation.
-
-### Quadratic Air Resistance
-
-The drag force is modelled as:
-
-\[
-\mathbf F_d=-\frac12\rho C_d A|\mathbf v|\mathbf v
-\]
+$$
+y(t)=v_0\sin(\theta)t-\frac{1}{2}gt^2
+$$
 
 where:
 
-- \(\rho\) is air density.
+- \(v_0\) is the initial speed, in metres per second (m/s).
+- \(\theta\) is the launch angle measured from the horizontal.
+- \(g\) is the acceleration due to gravity, in metres per second squared (m/s²).
+- \(t\) is the elapsed time, in seconds.
+
+For a projectile that lands at the same height from which it was launched, the theoretical range is
+
+$$
+R=\frac{v_0^2\sin(2\theta)}{g}
+$$
+
+The theoretical maximum height above the launch point is
+
+$$
+H=\frac{v_0^2\sin^2(\theta)}{2g}
+$$
+
+These equations provide reference values against which the numerical simulation can be compared.
+
+## 2. Projectile Motion with Quadratic Air Resistance
+
+In reality, a projectile moving through air experiences a drag force that opposes its velocity. This model uses quadratic drag, meaning that the magnitude of the drag force is proportional to the square of the speed.
+
+The drag force is
+
+$$
+\mathbf{F}_d=-\frac{1}{2}\rho C_d A|\mathbf{v}|\mathbf{v}
+$$
+
+where:
+
+- \(\rho\) is the density of air.
 - \(C_d\) is the drag coefficient.
 - \(A\) is the projectile's cross-sectional area.
-- \(\mathbf v\) is its velocity.
+- \(\mathbf{v}\) is the velocity vector.
+- \(|\mathbf{v}|\) is the speed.
+- The negative sign indicates that drag acts opposite to the direction of motion.
 
-The resulting drag acceleration is combined with gravitational acceleration to calculate the projectile's motion.
+The projectile's acceleration is calculated using Newton's second law, including both gravity and air resistance.
 
-### Numerical Method
+Unlike the ideal model, the equations with quadratic drag are solved numerically because the changing velocity affects the drag force throughout the flight.
 
-The numerical simulation uses the semi-implicit Euler method. Velocity is updated using acceleration before position is updated using the new velocity.
+## 3. Numerical Method
 
-When the projectile crosses ground level, linear interpolation estimates its landing position.
+The simulation uses the **semi-implicit Euler method** to update the projectile's velocity and position at small time intervals.
 
-## Constants and Assumptions
+At each time step, the model calculates the acceleration, updates the velocity, and then updates the position. When the projectile reaches ground level, the simulation estimates its landing point using interpolation.
+
+The time step, \(\Delta t\), determines how frequently the simulation updates the projectile's motion.
+
+Smaller time steps generally improve the numerical approximation, although they require more calculations.
+
+## 4. Constants and Parameters
 
 | Parameter | Value | Unit |
 |---|---:|---|
-| Gravitational acceleration | 9.81 | m/s² |
-| Air density | 1.225 | kg/m³ |
-| Projectile mass | 0.145 | kg |
-| Projectile radius | 0.037 | m |
-| Drag coefficient | 0.47 | Dimensionless |
-| Default time step | 0.01 | s |
+| Gravitational acceleration, \(g\) | 9.81 | m/s² |
+| Air density, \(\rho\) | 1.225 | kg/m³ |
+| Projectile mass, \(m\) | 0.145 | kg |
+| Projectile radius, \(r\) | 0.037 | m |
+| Drag coefficient, \(C_d\) | 0.47 | Dimensionless |
+| Default time step, \(\Delta t\) | 0.01 | s |
 
-The projectile parameters represent an approximate baseball-like object.
+The cross-sectional area is calculated using
 
-The model assumes:
-- A spherical projectile with constant cross-sectional area.
-- Constant air density and drag coefficient.
-- No wind, spin, or aerodynamic lift.
-- A flat surface at the launch height.
-- Constant gravitational acceleration.
+$$
+A=\pi r^2
+$$
 
-## Experiments and Validation
+The initial speed and launch angle are entered when running the notebook.
 
-### 1. Trajectory Comparison
+## 5. Assumptions and Limitations
 
-The analytical trajectory is compared with numerical simulations with and without air resistance.
+The simulation assumes:
 
-**Result:** [Describe the differences observed in range, maximum height, and trajectory.]
+- The projectile launches and lands at the same height.
+- Gravitational acceleration remains constant.
+- Air density and the drag coefficient remain constant.
+- The projectile is spherical, with a fixed cross-sectional area.
+- Air resistance acts opposite to the velocity.
+- Wind, spin, lift and changes in air density are ignored.
 
-### 2. Numerical Convergence
+The numerical model is an approximation. Its accuracy depends partly on the time step and the method used to estimate the landing point. The analytical equations apply only to the ideal model without air resistance.
 
-The no-drag numerical model is tested using time steps of 0.02, 0.01, 0.005, and 0.001 seconds.
+## 6. Experiments and Validation
 
-The simulated range and maximum height are compared with the exact analytical results using percentage error.
+### Trajectory Comparison
 
-**Result:** [Record how the errors changed as the time step decreased.]
+The notebook plots the projectile's trajectory with and without air resistance.
 
-## Results
+Compare the two curves to investigate how drag changes the flight path, range and maximum height for the selected launch conditions.
 
-Complete this table using the output generated by the notebook.
+### Numerical Convergence
 
-| Measurement | Result |
-|---|---|
-| Initial speed used | [Enter value] m/s |
-| Initial launch angle | [Enter value]° |
-| Ideal theoretical range | [Enter value] m |
-| Ideal theoretical maximum height | [Enter value] m |
-| Numerical range error at dt = 0.01 s | [Enter value]% |
-| Numerical maximum-height error at dt = 0.01 s | [Enter value]% |
+The ideal numerical model is tested using time steps of 0.02 s, 0.01 s, 0.005 s and 0.001 s.
 
-Results depend on the selected launch speed and angle. The notebook contains the numerical output and graphs.
+The simulated range and maximum height are compared with the corresponding analytical values using percentage error.
 
-## Limitations
+This experiment investigates whether reducing the time step improves agreement with the analytical solution.
 
-This model simplifies real projectile motion. The drag coefficient and air density are treated as constant, and the projectile is assumed to be spherical. Wind, spin, lift, and changes in atmospheric conditions are ignored.
+## 7. Results
 
-The semi-implicit Euler method introduces numerical error. Landing interpolation also approximates the point where the projectile reaches ground level.
+The notebook generates numerical results and graphs for the launch speed and angle entered at runtime.
 
-The model is intended for investigating physical relationships and numerical accuracy rather than predicting every real projectile trajectory precisely.
+The main outputs are:
+
+- The theoretical range and maximum height from the ideal analytical model.
+- The simulated range and maximum height.
+- The trajectories with and without air resistance.
+- The percentage errors for different time steps.
+- A graph showing how numerical error changes as the time step decreases.
+
+The numerical output should be used to draw conclusions about the effect of drag and the accuracy of the numerical method. The results will vary with the selected launch conditions.
+
+## 8. Technologies Used
+
+- **Python** — simulation and calculations.
+- **NumPy** — numerical calculations and arrays.
+- **Matplotlib** — trajectory and convergence graphs.
+- **Jupyter Notebook** — code, explanations and results.
+
+## 9. How to Run the Project
+
+1. Install Python and Jupyter Notebook.
+2. Install the required libraries:
+
+   ```bash
+   pip install numpy matplotlib
+   ```
+
+3. Open `Projectile_Motion_Simulator.ipynb` in Jupyter Notebook.
+4. Run the cells in order.
+5. Enter the initial speed and launch angle when prompted.
+6. Examine the numerical output, trajectory plots and convergence results.
 
 ## Conclusion
 
-This project combines analytical physics, numerical integration, and data visualisation to investigate projectile motion.
+This project investigates the differences between ideal projectile motion and motion affected by quadratic air resistance. It also tests the accuracy of numerical simulation by comparing results at different time steps with analytical predictions.
 
-The comparison between analytical and numerical solutions provides a way to assess simulation accuracy. The drag model demonstrates how adding a physical force changes the predicted motion, while the convergence test examines the effect of numerical time-step size.
+The simulation demonstrates how physical modelling and numerical methods can be combined to investigate a classical mechanics problem.
 
-The final conclusions should be based on the results generated by the notebook.
-
-## Technologies Used
-
-- Python
-- NumPy
-- Matplotlib
-- Jupyter Notebook
-
-## How to Run
-
-1. Install Python and Jupyter Notebook, or use Google Colab.
-2. Install the required libraries:
-
-   `pip install numpy matplotlib`
-
-3. Open `Projectile_Motion_Simulator.ipynb`.
-4. Run the notebook cells in order.
-5. Enter an initial speed and launch angle when prompted.
+**Author:** Swastik Mishra
 
 ## Author
 
